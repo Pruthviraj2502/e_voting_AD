@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     Button loginButton;
-    Button signupbutton;
+    TextView Signup;
 
 
     @Override
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
-        signupbutton = findViewById(R.id.signupText);
+        Signup = findViewById(R.id.signupText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        signupbutton.setOnClickListener(new View.OnClickListener() {
+        Signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 startActivity(intent);
+                finish();
             }
         });
 
