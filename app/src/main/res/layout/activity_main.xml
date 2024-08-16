@@ -79,15 +79,16 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Not registered? SignUp"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:id="@+id/signupText"
+        android:textStyle="bold"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/black"/>
 

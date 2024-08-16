@@ -1,4 +1,3 @@
-//signup_firebase
 package com.example.e_voting_system;
 
 import androidx.annotation.NonNull;
