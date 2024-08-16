@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497431770027",
+    "project_id": "e-voting-system-3dee2",
+    "storage_bucket": "e-voting-system-3dee2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497431770027:android:a1af4fccf75527c92218ee",
+        "android_client_info": {
+          "package_name": "com.example.e_voting_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUDXogjTMUU-3ygRBU_EosAlbWFgTMnuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
