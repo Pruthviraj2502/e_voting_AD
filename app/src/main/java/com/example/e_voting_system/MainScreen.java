@@ -1,54 +1,82 @@
 package com.example.e_voting_system;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainScreen extends AppCompatActivity {
 
-    TextView username;
-    Button Logout;
-    FirebaseAuth auth;
-    FirebaseUser user;
+    private RadioGroup candidateGroup;
+    private Button voteButton, resultButton;
+    private int[] votes = {0, 0, 0}; // To count votes for each candidate
+    private boolean hasVoted = false; // To track if the user has voted
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_screen);
 
-        username = findViewById(R.id.textView);
-        Logout = findViewById(R.id.button);
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        // Set up the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        candidateGroup = findViewById(R.id.candidate_group);
+        voteButton = findViewById(R.id.vote_button);
+        resultButton = findViewById(R.id.result_button);
 
-        username.setText(user.getEmail());
-        Logout.setOnClickListener(new View.OnClickListener() {
+        // Hide the result button initially
+        resultButton.setVisibility(View.GONE);
+
+        voteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainScreen.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                int selectedId = candidateGroup.getCheckedRadioButtonId();
+                if (selectedId != -1 && !hasVoted) {
+                    handleVote(selectedId);
+                    resultButton.setVisibility(View.VISIBLE); // Show result button after voting
+                    hasVoted = true; // Mark the user as having voted
+                } else if (hasVoted) {
+                    Toast.makeText(MainScreen.this, "You have already voted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainScreen.this, "Please select a candidate", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        resultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showResults();
+            }
         });
+    }
+
+    // Handle the voting logic using if-else
+    private void handleVote(int selectedId) {
+        if (selectedId == R.id.candidate_1) {
+            votes[0]++;
+            Toast.makeText(this, "You voted for Candidate 1", Toast.LENGTH_SHORT).show();
+        } else if (selectedId == R.id.candidate_2) {
+            votes[1]++;
+            Toast.makeText(this, "You voted for Candidate 2", Toast.LENGTH_SHORT).show();
+        } else if (selectedId == R.id.candidate_3) {
+            votes[2]++;
+            Toast.makeText(this, "You voted for Candidate 3", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Display the voting results
+    private void showResults() {
+        String resultMessage = "Results:\n" +
+                "Candidate 1: " + votes[0] + " votes\n" +
+                "Candidate 2: " + votes[1] + " votes\n" +
+                "Candidate 3: " + votes[2] + " votes";
+        Toast.makeText(this, resultMessage, Toast.LENGTH_LONG).show();
     }
 }

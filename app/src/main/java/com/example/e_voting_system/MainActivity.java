@@ -28,15 +28,30 @@ public class MainActivity extends AppCompatActivity {
     TextView signupbutton;
     FirebaseAuth mAuth;
 
+
+
     @Override
     public void onStart() {
+
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in (non-null) and update UI accordingly
+        // mAuth.signOut();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(MainActivity.this, MainScreen.class);
-            startActivity(intent);
-            finish();
+        if(currentUser != null ){
+
+            if(currentUser.getPhoneNumber()!=null){
+                Log.d(TAG,"Number:" + currentUser.getPhoneNumber());
+                mAuth.signOut();
+            }
+            else{
+                Log.d(TAG,"onAuthStateChanged:signed_in:" + currentUser.getUid());
+
+                Intent intent = new Intent(MainActivity.this, MainScreen.class);
+                startActivity(intent);
+                finish();
+            }
+
+
         }
     }
 
